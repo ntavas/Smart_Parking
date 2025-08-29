@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+#   mosquitto:
+#     image: eclipse-mosquitto
+#     container_name: mqtt-broker
+#     ports:
+#       - "1883:1883"
+#     volumes:
+#       - ./backend/mqtt-broker/mosquitto.conf:/mosquitto/config/mosquitto.conf
+  db:
+      image: postgres:16
+      restart: on-failure
+      container_name: postgres-smp-db
+      environment:
+        POSTGRES_USER: postgres_local
+        POSTGRES_PASSWORD: MyStrongPassw0rd!
+        POSTGRES_DB: sm_parking
+      ports:
+        - "5432:5432"
+      volumes:
+        - ./ops/ps-init.sql:/docker-entrypoint-initdb.d/ps-init.sql
