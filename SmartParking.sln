@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Api", "SmartParking.Api\SmartParking.Api.csproj", "{E926454E-C49E-45C6-B434-A3D6227FA446}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Core", "SmartParking.Core\SmartParking.Core.csproj", "{ABF11737-61A3-422B-A482-659635F81F98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Domain", "SmartParking.Domain\SmartParking.Domain.csproj", "{ABF11737-61A3-422B-A482-659635F81F98}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartParking.Infrastructure", "SmartParking.Infrastructure\SmartParking.Infrastructure.csproj", "{F2F2E47D-7E9C-4CE2-A5F7-3E4B241C66CB}"
 EndProject

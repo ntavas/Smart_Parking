@@ -6,4 +6,25 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\SmartParking.Domain\SmartParking.Domain.csproj" />
+        <ProjectReference Include="..\SmartParking.Application\SmartParking.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+        <PackageReference Include="EFCore.NamingConventions" Version="8.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.*" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.8" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.*" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.*" PrivateAssets="All" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.19" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Repositories\Interfaces\" />
+      <Folder Include="Security\Interfaces\" />
+    </ItemGroup>
+
 </Project>

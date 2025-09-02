@@ -8,11 +8,21 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
         <RootNamespace>SmartParking</RootNamespace>
     </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.18"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+    </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\SmartParking.Application\SmartParking.Application.csproj" />
+      <ProjectReference Include="..\SmartParking.Infrastructure\SmartParking.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

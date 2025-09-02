@@ -29,7 +29,7 @@ Since this is a **prototype for demonstration**, and you're using **users** main
 - [ ] Create a **BackgroundService** to consume MQTT messages (from sensors/mock) and update DB + broadcast via SignalR.
 
 #### 📡 IoT Simulation Layer
-- [ ] Deploy **Mosquitto or EMQX in Docker**.
+- [ ] Deploy **Mosquitto in Docker**.
 - [ ] Write a mock script (Node.js/Python) to simulate sensor data and publish to MQTT.
   - Topics like: `parking/spot/{id}/status`.
 

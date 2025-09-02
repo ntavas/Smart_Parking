@@ -1,7 +1,7 @@
 -- parking_db.sql
 
 CREATE TABLE parking_spots (
-                               id UUID PRIMARY KEY,
+                               id SERIAL PRIMARY KEY,
                                latitude DOUBLE PRECISION NOT NULL,
                                longitude DOUBLE PRECISION NOT NULL,
                                location VARCHAR(100) NOT NULL,
@@ -15,7 +15,7 @@ CREATE INDEX idx_parking_spots_location ON parking_spots (location);
 -- Status log
 CREATE TABLE spot_status_log (
                                  id SERIAL PRIMARY KEY,
-                                 spot_id UUID NOT NULL,
+                                 spot_id INTEGER NOT NULL,
                                  status VARCHAR(20) NOT NULL,
                                  timestamp TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC'),
                                  FOREIGN KEY (spot_id) REFERENCES parking_spots(id) ON DELETE CASCADE
@@ -23,16 +23,17 @@ CREATE TABLE spot_status_log (
 
 -- Users
 CREATE TABLE users (
-                       id UUID PRIMARY KEY,
+                       id SERIAL PRIMARY KEY,
                        email VARCHAR(100) UNIQUE NOT NULL,
                        password_hash TEXT NOT NULL,
+                       full_name VARCHAR(100),
                        created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'UTC')
 );
 
 -- Favorites
 CREATE TABLE user_favorites (
-                                user_id UUID,
-                                spot_id UUID,
+                                user_id INTEGER,
+                                spot_id INTEGER,
                                 PRIMARY KEY (user_id, spot_id),
                                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
                                 FOREIGN KEY (spot_id) REFERENCES parking_spots(id) ON DELETE CASCADE
@@ -40,9 +41,9 @@ CREATE TABLE user_favorites (
 
 -- Reservations
 CREATE TABLE reservations (
-                              id UUID PRIMARY KEY,
-                              user_id UUID NOT NULL,
-                              spot_id UUID NOT NULL,
+                              id SERIAL PRIMARY KEY,
+                              user_id INTEGER NOT NULL,
+                              spot_id INTEGER NOT NULL,
                               start_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
                               end_time TIMESTAMP WITHOUT TIME ZONE,
                               FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,

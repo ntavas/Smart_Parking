@@ -1,21 +1,32 @@
-﻿FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
-USER $APP_UID
-WORKDIR /app
-
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
+﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["SmartParking/SmartParking.csproj", "SmartParking/"]
-RUN dotnet restore "SmartParking/SmartParking.csproj"
-COPY . .
-WORKDIR "/src/SmartParking"
-RUN dotnet build "./SmartParking.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./SmartParking.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+# Copy solution and project files for better caching
+COPY SmartParking.sln ./
+COPY SmartParking.Api/SmartParking.Api.csproj SmartParking.Api/
+COPY SmartParking.Domain/SmartParking.Domain.csproj SmartParking.Domain/
+COPY SmartParking.Application/SmartParking.Application.csproj SmartParking.Application/
+COPY SmartParking.Infrastructure/SmartParking.Infrastructure.csproj SmartParking.Infrastructure/
 
-FROM base AS final
+RUN dotnet restore SmartParking.Api/SmartParking.Api.csproj
+
+# Copy the rest and publish
+COPY SmartParking.Api/ SmartParking.Api/
+COPY SmartParking.Domain/ SmartParking.Domain/
+COPY SmartParking.Application/ SmartParking.Application/
+COPY SmartParking.Infrastructure/ SmartParking.Infrastructure/
+
+WORKDIR /src/SmartParking.Api
+RUN dotnet publish -c Release -o /app/publish
+
+# ---------- runtime ----------
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SmartParking.dll"]
+ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 8080
+COPY --from=build /app/publish .
+
+# Run as a non-root user
+USER $APP_UID
+
+ENTRYPOINT ["dotnet", "SmartParking.Api.dll"]
